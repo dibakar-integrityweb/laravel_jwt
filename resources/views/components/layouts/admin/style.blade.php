@@ -21,6 +21,7 @@
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{asset('backend/assets/vendor/css/pages/dashboards-crm.css')}}" />
+    <link rel="stylesheet" href="{{asset('backend/assets/css/custom.css')}}" />
 
     <!-- Helpers -->
     <script src="{{asset('backend/assets/vendor/js/helpers.js')}}"></script>

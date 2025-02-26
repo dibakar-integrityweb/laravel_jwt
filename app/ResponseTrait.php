@@ -25,6 +25,14 @@ trait ResponseTrait
         return redirect($redirect)->with(['error' => $message]);
     }
 
+    public function warning($redirect = NULL, $message = NULL)
+    {
+        $this->response['status'] = false;
+        $this->response['redirect'] = $redirect;
+        $this->response['warning_msg'] = !is_null($message) ? $message : 'Something went wrong';
+        return redirect($redirect)->with(['warning' => $message]);
+    }
+
     public function ajaxSuccess($response = [], $message = NULL)
     {
         $this->response['status'] = true;

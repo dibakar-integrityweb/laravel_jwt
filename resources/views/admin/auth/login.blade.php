@@ -75,7 +75,7 @@
 
             <div class="card-body mt-1">
               <p class="mb-5">Please sign-in to your account</p>
-
+              <div id="alertMessage"><x-layouts.admin.alert/></div>
               <form id="formAuthentication" class="mb-5" action="{{route('admin.login.submit')}}" method="POST">
                 @csrf
                 <div class="form-floating form-floating-outline mb-5">

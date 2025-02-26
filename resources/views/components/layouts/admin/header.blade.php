@@ -392,7 +392,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                        <a class="dropdown-item" href="{{ route('admin.settings.index') }}">
                             <i class="ri-settings-4-line ri-22px me-2"></i>
                             <span class="align-middle">Settings</span>
                         </a>
@@ -423,7 +423,7 @@
                     </li>
                     <li>
                         <div class="d-grid px-4 pt-2 pb-1">
-                            <a class="btn btn-danger d-flex" href="auth-login-cover.html" target="_blank">
+                            <a class="btn btn-danger d-flex" href="{{route('admin.logout')}}" target="_blank">
                                 <small class="align-middle">Logout</small>
                                 <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
                             </a>

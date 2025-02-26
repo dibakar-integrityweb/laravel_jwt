@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Middleware\JwtMiddleware;
-use Illuminate\Auth\AuthenticationException;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -19,14 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(JwtMiddleware::class);
+        $middleware->alias([
+            'admin.auth' => \App\Http\Middleware\AdminAuthMiddleware::class,
+            'admin.guest' => \App\Http\Middleware\AdminRedirectAuthMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (AuthenticationException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response()->json([
-                    'message' => $e->getMessage(),
-                ], 401);
-            }
-        });
+        
     })->create();

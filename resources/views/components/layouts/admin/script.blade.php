@@ -21,3 +21,5 @@
 
     <!-- Page JS -->
     <script src="{{asset('backend/assets/js/dashboards-analytics.js')}}"></script>
+    <!-- / Custom JS -->
+    
