@@ -68,4 +68,42 @@ $(function () {
               $(element).removeClass('is-invalid');
             }
         });
+
+        $('#paymentSettingForm').validate({
+          ignore: [],
+          debug: false,
+          rules: {
+            publishable_key: {
+              required: true,
+            },
+            secret_key: {
+              required: true,
+            },
+            currency: {
+              required: true,
+            }
+          },
+          messages: {
+            publishable_key: {
+              required: "This publishable key field is required",
+            },
+            secret_key: {
+              required: "This secret key field is required",
+            },
+            currency: {
+              required: "This currency field is required",
+            }
+          },
+          errorElement: 'span',
+          errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+          element.closest('.form-floating').append(error);
+          },
+          highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+          },
+          unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+          }
+      });
   });

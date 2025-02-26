@@ -33,7 +33,20 @@ class SettingController extends Controller
         foreach ($settings as $setting) {
             $data[$setting->key] = $setting->value;
         }
-        return view('admin.setting.index', compact('data', 'allTimezones'));
+        $stripe = [];
+        $stripePayment = Setting::where('key', 'stripe_credentials')->first();
+        if ($stripePayment) {
+            $stripe_credentials = json_decode($stripePayment->value, true);
+            $stripe['publishable_key'] = $stripe_credentials['publishable_key'];
+            $stripe['secret_key'] = $stripe_credentials['secret_key'];
+            $stripe['currency'] = $stripe_credentials['currency'];
+        }
+        
+        return view('admin.setting.index', compact(
+            'data', 
+            'allTimezones',
+            'stripe'
+        ));
     }
 
     public function store(SettingRequest $request)
@@ -63,6 +76,38 @@ class SettingController extends Controller
 
     public function paymentSettings(PaymentSettingRequest $request)
     {
-
+        SettingService::SettingUpdateOrInsert(
+            ['key' => 'stripe_credentials'],
+            [
+                'value' => json_encode([
+                    "publishable_key" => $request['publishable_key'],
+                    "secret_key" => $request['secret_key'],
+                    "currency" => $request['currency'],
+                ])
+            ]
+        );
+        SettingService::SettingUpdateOrInsert(
+            ['key' => 'paypal_credentials'],
+            [
+                'value' => json_encode([
+                    "paypal_mode" => $request['paypal_mode'],
+                    "app_id" => $request['app_id'],
+                    "paypal_currency" => $request['paypal_currency'],
+                    "paypal_client_secret" => $request['paypal_client_secret'],
+                    "paypal_client_id" => $request['paypal_client_id'],
+                ])
+            ]
+        );
+        SettingService::SettingUpdateOrInsert(
+            ['key' => 'razorpay_credentials'],
+            [
+                'value' => json_encode([
+                    "razorpay_key" => $request['razorpay_key'],
+                    "razorpay_secret" => $request['razorpay_secret'],
+                ])
+            ]
+        );
+        $redirect = route('admin.settings.index');
+        return  $this->success($redirect, 'Payment setting updated successfully.');
     }
 }

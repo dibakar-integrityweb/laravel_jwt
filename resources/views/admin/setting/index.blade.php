@@ -197,6 +197,7 @@
                 <!-- Personal Info -->
                 <form id="paymentSettingForm" method="post" action="{{route('admin.payment.settings')}}" enctype="multipart/form-data">
                     @csrf
+                   
                     <div id="payment-setting" class="content">
                         <div class="content-header mb-4">
                             <h6 class="mb-0">Payment Setting</h6>
@@ -207,7 +208,7 @@
                         <div class="row g-6">
                             <div class="col-sm-6">
                             <div class="form-floating form-floating-outline">
-                                <input type="text" id="publishable_key" name="publishable_key" class="form-control" placeholder="Publishable Key" />
+                                <input type="text" id="publishable_key" name="publishable_key" value="{{ $stripe['publishable_key'] ?? '' }}" class="form-control" placeholder="Publishable Key" />
                                 <label for="publishable_key">Publishable Key</label>
                                 @error('publishable_key')
                                 <span class="invalid-feedback" role="alert">
@@ -218,7 +219,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" id="secret_key" name="secret_key" class="form-control" placeholder="Secret key" />
+                                    <input type="text" id="secret_key" name="secret_key" value="{{ $stripe['secret_key'] ?? '' }}" class="form-control" placeholder="Secret key" />
                                     <label for="secret_key">Secret key</label>
                                     @error('secret_key')
                                     <span class="invalid-feedback" role="alert">
@@ -229,9 +230,96 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" id="currency" name="currency" class="form-control" placeholder="Currency" />
+                                    <input type="text" id="currency" name="currency" value="{{ $stripe['currency'] ?? '' }}" class="form-control" placeholder="usd" />
                                     <label for="currency">Currency</label>
                                     @error('currency')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="content-header mb-4">
+                                <h6 class="mb-0"><strong>Paypal Credentials</strong></h6>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating form-floating-outline">
+                                  <select id="paypal_mode" class="select2 form-select" name="paypal_mode" data-allow-clear="true">
+                                    <option value="">Select</option>
+                                    <option value="Sandbox">Sandbox</option>
+                                    <option value="Live">Live</option>
+                                  </select>
+                                  <label for="paypal_mode">Paypal Mode</label>
+                                  @error('paypal_mode')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="paypal_currency" name="paypal_currency" class="form-control" placeholder="usd" />
+                                    <label for="paypal_currency">Currency</label>
+                                    @error('paypal_currency')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="app_id" name="app_id" class="form-control" placeholder="Paypal app id" />
+                                    <label for="app_id">Paypal App Id(only for live)</label>
+                                    @error('app_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="paypal_client_secret" name="paypal_client_secret" class="form-control" placeholder="Paypal Client Secret" />
+                                    <label for="paypal_client_secret">Paypal Client Secret</label>
+                                    @error('paypal_client_secret')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="paypal_client_id" name="paypal_client_id" class="form-control" placeholder="Paypal Client ID" />
+                                    <label for="paypal_client_id">Paypal Client ID</label>
+                                    @error('paypal_client_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="content-header mb-4">
+                                <h6 class="mb-0"><strong>Razorpay Credentials</strong></h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="razorpay_key" name="razorpay_key" class="form-control" placeholder="Razorpay key" />
+                                    <label for="razorpay_key">Razorpay Key</label>
+                                    @error('razorpay_key')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="razorpay_secret" name="razorpay_secret" class="form-control" placeholder="Razorpay secret" />
+                                    <label for="razorpay_secret">Razorpay Secret</label>
+                                    @error('razorpay_secret')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
