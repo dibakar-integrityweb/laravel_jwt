@@ -67,31 +67,64 @@ $(function () {
             unhighlight: function (element, errorClass, validClass) {
               $(element).removeClass('is-invalid');
             }
-        });
+    });
 
-        $('#paymentSettingForm').validate({
+    $('#mailSettingForm').validate({
           ignore: [],
           debug: false,
           rules: {
-            publishable_key: {
+            mail_driver: {
               required: true,
             },
-            secret_key: {
+            mail_host: {
               required: true,
             },
-            currency: {
+            mail_port: {
+              required: true,
+              digits: true,
+            },
+            mail_address: {
+              required: true,
+              email: true,
+            },
+            username: {
+              required: true,
+              email: true,
+            },
+            password: {
+              required: true,
+            },
+            from_name: {
+              required: true,
+            },
+            encryption: {
               required: true,
             }
           },
           messages: {
-            publishable_key: {
-              required: "This publishable key field is required",
+            mail_driver: {
+              required: "This mail driver field is required",
             },
-            secret_key: {
-              required: "This secret key field is required",
+            mail_host: {
+              required: "This mail host field is required",
             },
-            currency: {
-              required: "This currency field is required",
+            mail_port: {
+              required: "This mail port field is required",
+            },
+            mail_address: {
+              required: "This mail address field is required",
+            },
+            username: {
+              required: "This username field is required",
+            },
+            password: {
+              required: "This password field is required",
+            },
+            from_name: {
+              required: "This from name field is required",
+            },
+            encryption: {
+              required: "This encryption field is required",
             }
           },
           errorElement: 'span',
@@ -105,5 +138,49 @@ $(function () {
           unhighlight: function (element, errorClass, validClass) {
             $(element).removeClass('is-invalid');
           }
-      });
-  });
+    });
+
+    $('#seoSettingForm').validate({
+      ignore: [],
+      debug: false,
+      rules: {
+        meta_title: {
+          required: true,
+        },
+        meta_description: {
+          required: true,
+        },
+        og_title: {
+          required: true,
+        },
+        og_description: {
+          required: true,
+        }
+      },
+      messages: {
+        meta_title: {
+          required: "This meta title field is required",
+        },
+        meta_description: {
+          required: "This meta desription field is required",
+        },
+        og_title: {
+          required: "This og title field is required",
+        },
+        og_description: {
+          required: "This og description field is required",
+        }
+      },
+      errorElement: 'span',
+      errorPlacement: function (error, element) {
+        error.addClass('invalid-feedback');
+      element.closest('.form-floating').append(error);
+      },
+      highlight: function (element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+});

@@ -3,7 +3,7 @@
 @section('title')
     Setting
 @endsection
-@section('css')
+@section('css')  
     <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/bs-stepper/bs-stepper.css')}}" />
     <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}" />
     <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/select2/select2.css')}}" />
@@ -18,12 +18,12 @@
        <div class="col-12">
           <h5>Settings</h5>
        </div>
-       
+       {{ session('tab') }}
        <!-- Vertical Wizard -->
        <div class="col-12 mb-6">
           <div class="bs-stepper wizard-vertical vertical wizard-vertical-icons-example wizard-vertical-icons mt-2">
              <div class="bs-stepper-header">
-                <div class="step" data-target="#general-setting">
+                <div class="step {{ (Session::get('tab') == 'general') || empty(Session::get('tab')) ? 'active' : '' }}" data-target="#general-setting">
                    <button type="button" class="step-trigger">
                    <span class="avatar">
                    <span class="avatar-initial rounded-2">
@@ -35,7 +35,7 @@
                    </span>
                    </button>
                 </div>
-                <div class="step" data-target="#payment-setting">
+                <div class="step {{ (Session::get('tab') == 'payment') ? 'active' : '' }}" data-target="#payment-setting">
                    <button type="button" class="step-trigger">
                    <span class="avatar">
                    <span class="avatar-initial rounded-2">
@@ -47,7 +47,7 @@
                    </span>
                    </button>
                 </div>
-                <div class="step" data-target="#mail-setting">
+                <div class="step {{ (Session::get('tab') == 'smtp') ? 'active' : '' }}" data-target="#mail-setting">
                    <button type="button" class="step-trigger">
                    <span class="avatar">
                    <span class="avatar-initial rounded-2">
@@ -59,7 +59,7 @@
                    </span>
                    </button>
                 </div>
-                <div class="step" data-target="#seo-setting">
+                <div class="step {{ (Session::get('tab') == 'seo') ? 'active' : '' }}" data-target="#seo-setting">
                     <button type="button" class="step-trigger">
                     <span class="avatar">
                     <span class="avatar-initial rounded-2">
@@ -71,11 +71,12 @@
                     </span>
                     </button>
                 </div>
+                
              </div>
              <div class="bs-stepper-content">
                 <form id="settingForm" method="post" action="{{route('admin.settings.store')}}" enctype="multipart/form-data">
                     @csrf
-                    <div id="general-setting" class="content">
+                    <div id="general-setting" class="content {{ (Session::get('tab') == 'general') || empty(Session::get('tab')) ? 'active' : 'dstepper-block' }}">
                         <div class="content-header mb-4">
                             <h6 class="mb-0">General Setting</h6>
                         </div>
@@ -198,7 +199,7 @@
                 <form id="paymentSettingForm" method="post" action="{{route('admin.payment.settings')}}" enctype="multipart/form-data">
                     @csrf
                    
-                    <div id="payment-setting" class="content">
+                    <div id="payment-setting" class="content {{ (Session::get('tab') == 'payment') ? 'active' : 'dstepper-block' }}">
                         <div class="content-header mb-4">
                             <h6 class="mb-0">Payment Setting</h6>
                         </div>
@@ -242,12 +243,19 @@
                             <div class="content-header mb-4">
                                 <h6 class="mb-0"><strong>Paypal Credentials</strong></h6>
                             </div>
+                            @php
+                                if(isset($paypal['paypal_mode'])){
+                                     $mode = $paypal['paypal_mode'];
+                                }else{
+                                     $mode = null;
+                                }
+                            @endphp
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                   <select id="paypal_mode" class="select2 form-select" name="paypal_mode" data-allow-clear="true">
                                     <option value="">Select</option>
-                                    <option value="Sandbox">Sandbox</option>
-                                    <option value="Live">Live</option>
+                                    <option value="Sandbox" {{ $mode == 'Sandbox' ? 'selected' : '' }}>Sandbox</option>
+                                    <option value="Live" {{ $mode == 'Live' ? 'selected' : '' }}>Live</option>
                                   </select>
                                   <label for="paypal_mode">Paypal Mode</label>
                                   @error('paypal_mode')
@@ -259,7 +267,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" id="paypal_currency" name="paypal_currency" class="form-control" placeholder="usd" />
+                                    <input type="text" id="paypal_currency" name="paypal_currency" value="{{ $paypal['paypal_currency'] ?? '' }}" class="form-control" placeholder="usd" />
                                     <label for="paypal_currency">Currency</label>
                                     @error('paypal_currency')
                                     <span class="invalid-feedback" role="alert">
@@ -270,7 +278,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" id="app_id" name="app_id" class="form-control" placeholder="Paypal app id" />
+                                    <input type="text" id="app_id" name="app_id" value="{{ $paypal['app_id'] ?? '' }}" class="form-control" placeholder="Paypal app id" />
                                     <label for="app_id">Paypal App Id(only for live)</label>
                                     @error('app_id')
                                     <span class="invalid-feedback" role="alert">
@@ -281,7 +289,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" id="paypal_client_secret" name="paypal_client_secret" class="form-control" placeholder="Paypal Client Secret" />
+                                    <input type="text" id="paypal_client_secret" name="paypal_client_secret" value="{{ $paypal['paypal_client_secret'] ?? '' }}" class="form-control" placeholder="Paypal Client Secret" />
                                     <label for="paypal_client_secret">Paypal Client Secret</label>
                                     @error('paypal_client_secret')
                                     <span class="invalid-feedback" role="alert">
@@ -292,7 +300,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" id="paypal_client_id" name="paypal_client_id" class="form-control" placeholder="Paypal Client ID" />
+                                    <input type="text" id="paypal_client_id" name="paypal_client_id" value="{{ $paypal['paypal_client_id'] ?? '' }}" class="form-control" placeholder="Paypal Client ID" />
                                     <label for="paypal_client_id">Paypal Client ID</label>
                                     @error('paypal_client_id')
                                     <span class="invalid-feedback" role="alert">
@@ -306,7 +314,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" id="razorpay_key" name="razorpay_key" class="form-control" placeholder="Razorpay key" />
+                                    <input type="text" id="razorpay_key" name="razorpay_key" value="{{ $razorpay['razorpay_key']}}" class="form-control" placeholder="Razorpay key" />
                                     <label for="razorpay_key">Razorpay Key</label>
                                     @error('razorpay_key')
                                     <span class="invalid-feedback" role="alert">
@@ -317,7 +325,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" id="razorpay_secret" name="razorpay_secret" class="form-control" placeholder="Razorpay secret" />
+                                    <input type="text" id="razorpay_secret" name="razorpay_secret" value="{{ $razorpay['razorpay_secret']}}" class="form-control" placeholder="Razorpay secret" />
                                     <label for="razorpay_secret">Razorpay Secret</label>
                                     @error('razorpay_secret')
                                     <span class="invalid-feedback" role="alert">
@@ -333,68 +341,185 @@
                     </div>
                 </form>
                 <!-- Social Links -->
-                <form>
-                    <div id="mail-setting" class="content">
+                <form id="mailSettingForm" method="post" action="{{ route('admin.smtp.settings')}}" enctype="multipart/form-data">
+                    @csrf
+                    <div id="mail-setting" class="content {{ (Session::get('tab') == 'smtp') ? 'active' : '' }}">
                         <div class="content-header mb-4">
                             <h6 class="mb-0">Mail Setting</h6>
                         </div>
                         <div class="row g-6">
+                            <div class="col-sm-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="mail_driver" value="{{ $mailSetting['mail_driver'] ?? '' }}" name="mail_driver" class="form-control" placeholder="Mail driver" />
+                                    <label for="mail_driver">Mail Driver</label>
+                                    @error('mail_driver')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="mail_host" name="mail_host" value="{{ $mailSetting['mail_host'] ?? '' }}" class="form-control" placeholder="Mail host" />
+                                    <label for="mail_host">Mail Host</label>
+                                    @error('mail_host')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="mail_port" name="mail_port" value="{{ $mailSetting['mail_port'] ?? '' }}" class="form-control" placeholder="Mail port" />
+                                    <label for="mail_port">Mail Port</label>
+                                    @error('mail_port')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-sm-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" id="twitter-vertical" class="form-control" placeholder="https://twitter.com/abc" />
-                                <label for="twitter-vertical">Twitter</label>
-                            </div>
-                            </div>
-                            <div class="col-sm-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" id="facebook-vertical" class="form-control" placeholder="https://facebook.com/abc" />
-                                <label for="facebook-vertical">Facebook</label>
-                            </div>
-                            </div>
-                            <div class="col-sm-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" id="google-vertical" class="form-control" placeholder="https://plus.google.com/abc" />
-                                <label for="google-vertical">Google+</label>
-                            </div>
+                                <div class="form-floating form-floating-outline">
+                                    <input type="email" id="mail_address" name="mail_address" value="{{ $mailSetting['mail_address'] ?? '' }}" class="form-control" placeholder="example@domain.com" />
+                                    <label for="mail_address">Mail Address</label>
+                                    @error('mail_address')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col-sm-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" id="linkedin-vertical" class="form-control" placeholder="https://linkedin.com/abc" />
-                                <label for="linkedin-vertical">LinkedIn</label>
+                                <div class="form-floating form-floating-outline">
+                                    <input type="email" id="username" name="username" value="{{ $mailSetting['username'] ?? '' }}" class="form-control" placeholder="example@domain.com" />
+                                    <label for="username">User Name</label>
+                                    @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
+                            <div class="col-sm-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="password" name="password" value="{{ $mailSetting['password'] ?? '' }}" class="form-control" placeholder="Password" />
+                                    <label for="password">Password</label>
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="from_name" name="from_name" value="{{ $mailSetting['from_name'] ?? '' }}" class="form-control" placeholder="Mail from name" />
+                                    <label for="from_name">Mail From Name</label>
+                                    @error('from_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @php
+                                if(isset($mailSetting['encryption'])){
+                                     $encryption = $mailSetting['encryption'];
+                                }else{
+                                     $encryption = null;
+                                }
+                            @endphp
+                            <div class="col-sm-4">
+                                <div class="form-floating form-floating-outline">
+                                    <select id="encryption" class="select2 form-select" name="encryption" data-allow-clear="true">
+                                        <option value="">Select</option>
+                                        <option value="ssl" {{ $encryption == 'ssl' ? 'selected' : '' }}>SSL</option>
+                                        <option value="tls" {{ $encryption == 'tls' ? 'selected' : '' }}>TLS</option>
+                                    </select>
+                                    <label for="encryption">Encryption</label>
+                                    @error('encryption')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12 justify-content-between">
+                                <button type="submit" class="btn btn-primary float-end">Submit</button>
                             </div>
                         </div>
                     </div>
                 </form>
-                <form>
-                    <div id="seo-setting" class="content">
+                <form id="seoSettingForm" method="post" action="{{ route('admin.seo.settings') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div id="seo-setting" class="content {{ (Session::get('tab') == 'seo') ? 'active' : '' }}">
                         <div class="content-header mb-4">
-                            <h6 class="mb-0">Mail Setting</h6>
+                            <h6 class="mb-0">Seo Setting</h6>
                         </div>
                         <div class="row g-6">
-                            <div class="col-sm-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" id="twitter-vertical" class="form-control" placeholder="https://twitter.com/abc" />
-                                <label for="twitter-vertical">Twitter</label>
+                            <div class="col-sm-12">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="meta_title" value="{{ $seoSetting['meta_title'] ?? '' }}" name="meta_title" class="form-control" placeholder="Meta title" />
+                                    <label for="meta_title">Meta Title</label>
+                                    @error('meta_title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-floating form-floating-outline">
+                                  <textarea name="meta_description" class="form-control" id="meta_description" rows="5" placeholder="Meta description" style="height:130px;">{{ $seoSetting['meta_description'] ?? '' }}</textarea>
+                                  <label for="meta_description">Meta Description</label>
+                                  @error('meta_description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" id="facebook-vertical" class="form-control" placeholder="https://facebook.com/abc" />
-                                <label for="facebook-vertical">Facebook</label>
+                            <div class="col-sm-12">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" id="og_title" value="{{ $seoSetting['og_title'] ?? '' }}" name="og_title" class="form-control" placeholder="Meta title" />
+                                    <label for="og_title">OG Title</label>
+                                    @error('og_title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-floating form-floating-outline">
+                                  <textarea name="og_description" class="form-control" id="og_description" rows="5" placeholder="Meta description" style="height:130px;">{{ $seoSetting['og_description'] ?? '' }}</textarea>
+                                  <label for="og_description">OG Description</label>
+                                  @error('og_description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" id="google-vertical" class="form-control" placeholder="https://plus.google.com/abc" />
-                                <label for="google-vertical">Google+</label>
+                            <div class="col-md-6">
+                                <div class="form-floating form-floating-outline">
+                                  <input class="form-control" type="file" id="og_file" name="og_file" accept="image/*" onchange="document.getElementById('og_img_preview').src = window.URL.createObjectURL(this.files[0]);">
+                                  <label for="og_file">Og Image</label>
+                                </div>
+                                <br>
+                                @if (isset($seoSetting['og_image']))
+                                    <img class="img-fluid rounded mb-4" id="og_img_preview" src="{{asset('storage/'.$seoSetting['og_image'])}}" height="120" width="120" alt="og Image">
+                                @else
+                                    <img class="img-fluid rounded mb-4" id="og_img_preview" src="{{asset('backend/assets/img/no-image.jpg')}}" height="120" width="120" alt="og image">
+                                @endif
+                                
+                                
                             </div>
-                            </div>
-                            <div class="col-sm-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" id="linkedin-vertical" class="form-control" placeholder="https://linkedin.com/abc" />
-                                <label for="linkedin-vertical">LinkedIn</label>
-                            </div>
+                            <div class="col-12 justify-content-between">
+                                <button type="submit" class="btn btn-primary float-end">Submit</button>
                             </div>
                         </div>
                     </div>
