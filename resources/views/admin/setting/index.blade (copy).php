@@ -76,7 +76,7 @@
              <div class="bs-stepper-content">
                 <form id="settingForm" method="post" action="{{route('admin.settings.store')}}" enctype="multipart/form-data">
                     @csrf
-                    <div id="general-setting" class="content {{ (Session::get('tab') == 'general') || empty(Session::get('tab')) ? 'active' : 'dstepper-block' }}">
+                    <div id="general-setting" class="content {{ (Session::get('tab') == 'general') || empty(Session::get('tab')) ? 'active' : '' }}">
                         <div class="content-header mb-4">
                             <h6 class="mb-0">General Setting</h6>
                         </div>
