@@ -24,5 +24,7 @@ Route::group(['middleware' => 'admin.auth'],function () {
     Route::resource('settings',SettingController::class)->only('index','store');
     Route::post('payment/settings',[SettingController::class,'paymentSettings'])->name('payment.settings');
     Route::post('seo/settings',[SettingController::class,'seoSettings'])->name('seo.settings');
-    Route::post('smtp/settings',[SettingController::class,'smtpSettings'])->name('smtp.settings');  
+    Route::post('smtp/settings',[SettingController::class,'smtpSettings'])->name('smtp.settings');
+   
+    Route::post('smtp/verification/settings',[SettingController::class,'smtpVerificationSettings'])->name('smtp.verification.settings')->middleware('mail'); 
 });

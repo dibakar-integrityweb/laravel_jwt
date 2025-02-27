@@ -89,7 +89,6 @@ $(function () {
             },
             username: {
               required: true,
-              email: true,
             },
             password: {
               required: true,
@@ -169,6 +168,33 @@ $(function () {
         },
         og_description: {
           required: "This og description field is required",
+        }
+      },
+      errorElement: 'span',
+      errorPlacement: function (error, element) {
+        error.addClass('invalid-feedback');
+      element.closest('.form-floating').append(error);
+      },
+      highlight: function (element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+
+    $('#emailVerificationForm').validate({
+      ignore: [],
+      debug: false,
+      rules: {
+        verify_email: {
+          required: true,
+          email: true,
+        }
+      },
+      messages: {
+        verify_email: {
+          required: "This email field is required",
         }
       },
       errorElement: 'span',

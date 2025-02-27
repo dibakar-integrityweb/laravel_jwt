@@ -8,9 +8,11 @@ use App\Http\Requests\Admin\Setting\PaymentSettingRequest;
 use App\Http\Requests\Admin\Setting\SettingRequest;
 use App\Models\Setting;
 use App\Models\Timezone;
+use App\Notifications\Admin\Setting\EmailVerifyNotification;
 use App\ResponseTrait;
 use App\Services\Admin\Setting\SettingService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
@@ -215,5 +217,33 @@ class SettingController extends Controller
         );
         $redirect = route('admin.settings.index');
         return  $this->success($redirect, 'Seo setting updated successfully.')->with(['tab' => 'seo']);
+    }
+
+    public function smtpVerificationSettings(Request $request)
+    {
+        $redirect = route('admin.settings.index');
+        $mailData = Setting::where('key','mail_config')->first();
+        if(!empty($mailData)){
+            $appTitle = Setting::where('key','app_name')->value('value');
+            $appName =  isset($appTitle) ? ($appTitle) : config('app.name');
+            $setting = Setting::where('key','logo')->first();
+            if($setting['value'] != ''){
+                $logo = asset('storage/'.$setting['value']);
+            }else{
+                $logo = asset('backend/assets/img/logo.png');
+            }
+            $messages = [
+                'body' => 'Email configuration verified successfully on your application.',
+                'thanks' => 'Thank you this is from '.$appName.' .',
+                'logo' => $logo,
+                
+            ];
+            Notification::route('mail', $request->verify_email)->notify(new EmailVerifyNotification($messages));
+            return  $this->success($redirect, 'Email configuration verified.')->with(['tab' => 'smtp']);
+        }else{
+            return  $this->error($redirect, 'First email setting put the value.')->with(['tab' => 'smtp']);
+        }
+        
+       
     }
 }
