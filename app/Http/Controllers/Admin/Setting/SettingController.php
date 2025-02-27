@@ -241,7 +241,7 @@ class SettingController extends Controller
             Notification::route('mail', $request->verify_email)->notify(new EmailVerifyNotification($messages));
             return  $this->success($redirect, 'Email configuration verified.')->with(['tab' => 'smtp']);
         }else{
-            return  $this->error($redirect, 'First email setting put the value.')->with(['tab' => 'smtp']);
+            return  $this->error($redirect, 'Please fill in the SMTP details and save them first.')->with(['tab' => 'smtp']);
         }
         
        
