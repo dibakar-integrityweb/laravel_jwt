@@ -5,6 +5,7 @@ $(document).ready(function () {
         }
     });
 
+
     toastr.options = {
         "closeButton": true,
         "newestOnTop": false,
