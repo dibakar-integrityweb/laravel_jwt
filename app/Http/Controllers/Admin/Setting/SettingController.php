@@ -243,7 +243,21 @@ class SettingController extends Controller
         }else{
             return  $this->error($redirect, 'Please fill in the SMTP details and save them first.')->with(['tab' => 'smtp']);
         }
-        
+    }
+
+    public function themeStyleStore(Request $request)
+    {
+        SettingService::SettingUpdateOrInsert(
+            ['key' => 'theme_style'],
+            [
+                'value' => json_encode([
+                    "data_style" => $request['dataTheme'],
+                    "data_style_class" => $request['dataStyle'],
+                ])
+            ]
+        );
+       
+        return $this->ajaxSuccess('','Theme style store successfully.');
        
     }
 }

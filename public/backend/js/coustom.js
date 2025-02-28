@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     toastr.options = {
         "closeButton": true,
         "newestOnTop": false,
@@ -15,6 +21,34 @@ $(document).ready(function () {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
       }
+
+      $(".themeStyleChange").click(function(e){
+        //alert('ok');
+        e.preventDefault();
+        var actionUrl = $(document).find('.actionThemeStyleUrl').val();
+        var dataTheme = $(this).attr("data-theme");
+        var dataStyle = $(this).attr("data-style");
+        $.ajax({
+            url: actionUrl,
+            type:"POST" ,
+            data: {
+                dataTheme:dataTheme,dataStyle:dataStyle
+            },
+            beforeSend: function(){
+                ajaxindicatorstart()
+            },
+            success:function(response)
+            {
+                ajaxindicatorstop()
+                console.log(response.status);
+                if(response.status == true){
+                    location.reload();
+                  
+                }
+            }
+        });
+    });
+
     $(document).on('click', '.openPopup', function(){
         let url = $(this).attr('data-action-url');
         var title = $(this).attr('data-title');

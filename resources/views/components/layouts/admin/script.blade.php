@@ -14,12 +14,11 @@
     <script src="{{asset('backend/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
     <script src="{{asset('backend/assets/vendor/libs/cleavejs/cleave.js')}}"></script>
     <script src="{{asset('backend/assets/vendor/libs/cleavejs/cleave-phone.js')}}"></script>
-
+    <script src="{{asset('backend/assets/vendor/libs/toastr/toastr.js')}}"></script>
     <!-- Main JS -->
     <script src="{{asset('backend/assets/js/main.js')}}"></script>
 
 
-    <!-- Page JS -->
-    <script src="{{asset('backend/assets/js/dashboards-analytics.js')}}"></script>
     <!-- / Custom JS -->
-    
+    <script src="{{asset('backend/js/loader.js')}}"></script>
+    <script src="{{asset('backend/js/coustom.js')}}"></script>

@@ -10,8 +10,17 @@
     <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/node-waves/node-waves.css')}}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{asset('backend/assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{asset('backend/assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
+    @php
+        $data = theme_style('theme_style');
+    @endphp
+    @if ($data['data_style_class'] == 'light-style' && $data['data_style'] == 'light')
+    <link rel="stylesheet" href="{{asset('backend/assets/vendor/css/rtl/core.css')}}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{asset('backend/assets/vendor/css/rtl/theme-default.css')}}" class="template-customizer-theme-css" />
+    @else
+    <link rel="stylesheet" href="{{asset('backend/assets/vendor/css/rtl/core-dark.css')}}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{asset('backend/assets/vendor/css/rtl/theme-default-dark.css')}}" class="template-customizer-theme-css" />
+    @endif
+    
     <link rel="stylesheet" href="{{asset('backend/assets/css/demo.css')}}" />
 
     <!-- Vendors CSS -->
@@ -22,6 +31,7 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{asset('backend/assets/vendor/css/pages/dashboards-crm.css')}}" />
     <link rel="stylesheet" href="{{asset('backend/assets/css/custom.css')}}" />
+    <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/toastr/toastr.css')}}" />
 
     <!-- Helpers -->
     <script src="{{asset('backend/assets/vendor/js/helpers.js')}}"></script>

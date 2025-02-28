@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact " dir="ltr" data-theme="theme-default" data-assets-path="{{asset('backend/assets/')}}" data-template="vertical-menu-template" data-style="light">
+@php
+    $data = theme_style('theme_style');
+@endphp
+<html lang="en" class="{{ $data['data_style_class']}} layout-navbar-fixed layout-menu-fixed layout-compact " dir="ltr" data-theme="theme-default" data-assets-path="{{asset('backend/assets/')}}" data-template="vertical-menu-template" data-style="{{ $data['data_style']}}">
 
 <head>
     <meta charset="utf-8" />
@@ -10,6 +13,7 @@
 
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
     <meta name="keywords" content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Canonical SEO -->
     <link rel="canonical" href="https://themeselection.com/item/materio-bootstrap-html-admin-template/">
 

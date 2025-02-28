@@ -7,163 +7,34 @@
 
 
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
-
-        <!-- Search -->
-        <div class="navbar-nav align-items-center">
-            <div class="nav-item navbar-search-wrapper mb-0">
-                <a class="nav-item nav-link search-toggler fw-normal px-0" href="javascript:void(0);">
-                    <i class="ri-search-line ri-22px scaleX-n1-rtl me-1_5"></i>
-                    <span class="d-none d-md-inline-block text-muted ms-1_5">Search (Ctrl+/)</span>
-                </a>
-            </div>
-        </div>
-        <!-- /Search -->
-
-
-
-
-
+        @php
+            $data = theme_style('theme_style');
+        @endphp
         <ul class="navbar-nav flex-row align-items-center ms-auto">
-
-
-
-            <!-- Language -->
-            <li class="nav-item dropdown-language dropdown">
-                <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <i class='ri-translate-2 ri-22px'></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end py-2">
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-language="en" data-text-direction="ltr">
-                            <span class="align-middle">English</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-language="fr" data-text-direction="ltr">
-                            <span class="align-middle">French</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-language="ar" data-text-direction="rtl">
-                            <span class="align-middle">Arabic</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-language="de" data-text-direction="ltr">
-                            <span class="align-middle">German</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <!--/ Language -->
-
             <!-- Style Switcher -->
             <li class="nav-item dropdown-style-switcher dropdown">
                 <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <i class='ri-22px ri-sun-line'></i>
+                    @if($data['data_style'] == 'light')
+                        <i class='ri-22px ri-sun-line'></i>
+                    @else
+                        <i class="ri-moon-clear-line"></i>
+                    @endif
                 </a>
+                <input type="hidden" class="actionThemeStyleUrl" value="{{ route('admin.theme.style.store') }}"/>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
                     <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-theme="light">
+                        <a class="dropdown-item themeStyleChange" href="javascript:void(0);" data-style="light-style" data-theme="light">
                             <span class="align-middle"><i class='ri-sun-line ri-22px me-3'></i>Light</span>
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-theme="dark">
+                        <a class="dropdown-item themeStyleChange" href="javascript:void(0);" data-style="dark-style" data-theme="dark">
                             <span class="align-middle"><i class="ri-moon-clear-line ri-22px me-3"></i>Dark</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-theme="system">
-                            <span class="align-middle"><i class="ri-computer-line ri-22px me-3"></i>System</span>
                         </a>
                     </li>
                 </ul>
             </li>
             <!-- / Style Switcher-->
-
-            <!-- Quick links  -->
-            <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown">
-                <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                    <i class='ri-star-smile-line ri-22px'></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end py-0">
-                    <div class="dropdown-menu-header border-bottom py-50">
-                        <div class="dropdown-header d-flex align-items-center py-2">
-                            <h6 class="mb-0 me-auto">Shortcuts</h6>
-                            <a href="javascript:void(0)" class="btn btn-text-secondary rounded-pill btn-icon dropdown-shortcuts-add" data-bs-toggle="tooltip" data-bs-placement="top" title="Add shortcuts"><i class="ri-layout-grid-line ri-24px text-heading"></i></a>
-                        </div>
-                    </div>
-                    <div class="dropdown-shortcuts-list scrollable-container">
-                        <div class="row row-bordered overflow-visible g-0">
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-      <i class="ri-calendar-line ri-26px text-heading"></i>
-    </span>
-                                <a href="app-calendar.html" class="stretched-link">Calendar</a>
-                                <small>Appointments</small>
-                            </div>
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-      <i class="ri-file-text-line ri-26px text-heading"></i>
-    </span>
-                                <a href="app-invoice-list.html" class="stretched-link">Invoice App</a>
-                                <small>Manage Accounts</small>
-                            </div>
-                        </div>
-                        <div class="row row-bordered overflow-visible g-0">
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-      <i class="ri-user-line ri-26px text-heading"></i>
-    </span>
-                                <a href="app-user-list.html" class="stretched-link">User App</a>
-                                <small>Manage Users</small>
-                            </div>
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-      <i class="ri-computer-line ri-26px text-heading"></i>
-    </span>
-                                <a href="app-access-roles.html" class="stretched-link">Role Management</a>
-                                <small>Permission</small>
-                            </div>
-                        </div>
-                        <div class="row row-bordered overflow-visible g-0">
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-      <i class="ri-pie-chart-2-line ri-26px text-heading"></i>
-    </span>
-                                <a href="index.html" class="stretched-link">Dashboard</a>
-                                <small>Analytics</small>
-                            </div>
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-      <i class="ri-settings-4-line ri-26px text-heading"></i>
-    </span>
-                                <a href="pages-account-settings-account.html" class="stretched-link">Setting</a>
-                                <small>Account Settings</small>
-                            </div>
-                        </div>
-                        <div class="row row-bordered overflow-visible g-0">
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-      <i class="ri-question-line ri-26px text-heading"></i>
-    </span>
-                                <a href="pages-faq.html" class="stretched-link">FAQs</a>
-                                <small class="text-muted mb-0">FAQs & Articles</small>
-                            </div>
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rtlrounded-circle mb-2">
-      <i class="ri-tv-2-line ri-26px text-heading"></i>
-    </span>
-                                <a href="modal-examples.html" class="stretched-link">Modals</a>
-                                <small>Useful Popups</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <!-- Quick links -->
 
             <!-- Notification -->
             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-4 me-xl-1">
@@ -359,10 +230,19 @@
             <!--/ Notification -->
 
             <!-- User -->
+            @php
+                $user = user_details(Auth::guard('admin')->user()->id);
+                $role = user_role(Auth::guard('admin')->user()->role_id)
+            @endphp
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="{{asset('backend/assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle">
+                        @if ($user->file_path !='')
+                            <img src="{{ $user->full_file_path }}" alt class="w-px-40 h-auto rounded-circle">
+                        @else
+                            <img src="{{asset('backend/assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle">
+                        @endif
+                        
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
@@ -371,12 +251,16 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0 me-2">
                                     <div class="avatar avatar-online">
-                                        <img src="{{asset('backend/assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle">
+                                        @if ($user->file_path !='')
+                                            <img src="{{ $user->full_file_path }}" alt class="w-px-40 h-auto rounded-circle">
+                                        @else
+                                            <img src="{{asset('backend/assets/img/avatars/1.png')}}" alt class="w-px-40 h-auto rounded-circle">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <h6 class="mb-0 small">John Doe</h6>
-                                    <small class="text-muted">Admin</small>
+                                    <h6 class="mb-0 small">{{ $user->name ?? '' }}</h6>
+                                    <small class="text-muted">{{ $role }}</small>
 
                                 </div>
                             </div>
@@ -386,7 +270,7 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="pages-profile-user.html">
+                        <a class="dropdown-item" href="#">
                             <i class="ri-user-3-line ri-22px me-2"></i>
                             <span class="align-middle">My Profile</span>
                         </a>
@@ -398,28 +282,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="pages-account-settings-billing.html">
-                            <span class="d-flex align-items-center align-middle">
-    <i class="flex-shrink-0 ri-file-text-line ri-22px me-2"></i>
-    <span class="flex-grow-1 align-middle">Billing</span>
-                            <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger h-px-20 d-flex align-items-center justify-content-center">4</span>
-                            </span>
-                        </a>
-                    </li>
-                    <li>
                         <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-pricing.html">
-                            <i class="ri-money-dollar-circle-line ri-22px me-2"></i>
-                            <span class="align-middle">Pricing</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-faq.html">
-                            <i class="ri-question-line ri-22px me-2"></i>
-                            <span class="align-middle">FAQ</span>
-                        </a>
                     </li>
                     <li>
                         <div class="d-grid px-4 pt-2 pb-1">

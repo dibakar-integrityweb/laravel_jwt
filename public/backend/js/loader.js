@@ -1,10 +1,11 @@
 function ajaxindicatorstart() {
     if (jQuery('body').find('#resultLoading').attr('id') != 'resultLoading') {
-        jQuery('body').append('<div id="resultLoading" style="display:none"><div><i style="font-size: 46px;color: #733aea;" class="fa fa-spinner fa-spin fa-2x fa-fw" aria-hidden="true"></i></div><div class="bg"></div></div>');
+        //jQuery('body').append('<div id="resultLoading" style="display:none"><div><i style="font-size: 46px;color: #733aea;" class="fa fa-spinner fa-spin fa-2x fa-fw" aria-hidden="true"></i></div><div class="bg"></div></div>');
+        jQuery('body').append('<div id="resultLoading" class="spinner-border" role="status" style="display:none"><span class="visually-hidden">Loading...</span></div>');
     }
     jQuery('#resultLoading').css({
-        'width': '100%',
-        'height': '100%',
+        // 'width': '100%',
+        // 'height': '100%',
         'position': 'fixed',
         'z-index': '10000000',
         'top': '0',
@@ -22,8 +23,8 @@ function ajaxindicatorstart() {
         'top': '0'
     });
     jQuery('#resultLoading>div:first').css({
-        'width': '250px',
-        'height': '75px',
+        // 'width': '250px',
+        // 'height': '75px',
         'text-align': 'center',
         'position': 'fixed',
         'top': '0',

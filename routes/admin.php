@@ -25,6 +25,6 @@ Route::group(['middleware' => 'admin.auth'],function () {
     Route::post('payment/settings',[SettingController::class,'paymentSettings'])->name('payment.settings');
     Route::post('seo/settings',[SettingController::class,'seoSettings'])->name('seo.settings');
     Route::post('smtp/settings',[SettingController::class,'smtpSettings'])->name('smtp.settings');
-   
-    Route::post('smtp/verification/settings',[SettingController::class,'smtpVerificationSettings'])->name('smtp.verification.settings')->middleware('mail'); 
+    Route::post('smtp/verification/settings',[SettingController::class,'smtpVerificationSettings'])->name('smtp.verification.settings')->middleware('mail');
+    Route::post('theme/style/store',[SettingController::class,'themeStyleStore'])->name('theme.style.store'); 
 });
