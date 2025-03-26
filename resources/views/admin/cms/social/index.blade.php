@@ -4,14 +4,15 @@
     Social
 @endsection
 @section('css')
-    <link href="{{asset('backend/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}"/>
-    <link href="{{asset('backend/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css')}}"/>
-    <link href="{{asset('backend/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css')}}"/>
-    <link href="{{asset('backend/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')}}"/>
-    <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/flatpickr/flatpickr.css')}}" />
-    <link href="{{asset('backend/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css')}}"/>
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/datatable/css/datatables.bootstrap5.css') }}"/>
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/datatable/css/responsive.bootstrap5.css') }}"/>
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/datatable/css/datatables.checkboxes.css') }}"/>
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/datatable/css/buttons.bootstrap5.css') }}"/>
+<link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/datatable/css/rowgroup.bootstrap5.css') }}"/>
     <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}" />
     <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/select2/select2.css')}}" />
+    <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
+    <link rel="stylesheet" href="{{asset('backend/assets/vendor/libs/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}" />
 @endsection
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -57,8 +58,8 @@
             <div class="mb-3">
                 <select class="form-select form-select-sm select2" id="filter_status" name="status">
                     <option value="">Status Search</option>
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
                 </select>
             </div>
         </div>
@@ -87,12 +88,10 @@
 @endsection
 
 @section('js')
-<script src="{{asset('backend/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
-<!-- Flat Picker -->
-<script src="{{asset('backend/assets/vendor/libs/moment/moment.js')}}"></script>
-<script src="{{asset('backend/assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
+<script src="{{ asset('backend/assets/vendor/libs/datatable/js/datatables-bootstrap5.js') }}"></script>
 <script src="{{asset('backend/assets/vendor/libs/bootstrap-select/bootstrap-select.js')}}"></script>
 <script src="{{asset('backend/assets/vendor/libs/select2/select2.js')}}"></script>
+<script src="{{asset('backend/assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <x-layouts.admin.toast-swal-alert/>
 <x-admin.cms.social.social-datatable/>
 @endsection

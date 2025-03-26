@@ -23,7 +23,7 @@ class SocialService
             
             ->addColumn('status', function ($data) {
                 if($data->status == 1){
-                    $status = '<span class="badge rounded-pill bg-label-success">Success</span>';
+                    $status = '<span class="badge rounded-pill bg-label-success">Active</span>';
                 }else{
                     $status = '<span class="badge rounded-pill bg-label-danger">Inactive</span>';
                 }
@@ -34,6 +34,11 @@ class SocialService
                 return $actionButton;
             })
             ->filter(function ($instance) use ($request) {
+                if (!empty($request['status'])) {
+                    $status = $request['status'];
+                    $instance->where('status', $request['status']);
+                }
+
                 if (!empty($request['search'])) {
                     $instance->where(function($w) use($request){
                         $search = $request['search'];

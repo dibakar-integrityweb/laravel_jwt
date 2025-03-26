@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 @php
     $data = theme_style('theme_style');
+    $appName = app_name('app_name');
 @endphp
 <html lang="en" class="{{ $data['data_style_class']}} layout-navbar-fixed layout-menu-fixed layout-compact " dir="ltr" data-theme="theme-default" data-assets-path="{{asset('backend/assets/')}}" data-template="vertical-menu-template" data-style="{{ $data['data_style']}}">
 
@@ -8,16 +9,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>@yield('title') | {{ config('app.name') ?? null }}</title>
+    <title>@yield('title') | {{ $appName ?? null }}</title>
 
 
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
     <meta name="keywords" content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <!-- Canonical SEO -->
-    <link rel="canonical" href="https://themeselection.com/item/materio-bootstrap-html-admin-template/">
-
-
+    
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{asset('backend/assets/img/favicon/favicon.ico')}}" />
 

@@ -19,7 +19,7 @@ class SocialController extends Controller
     }
     public function index(Request $request)
     {
-        if($request->ajax()){
+        if( $request->ajax() ){
             return $this->socialService->getDatatable($request->all());
         }
         return view('admin.cms.social.index');

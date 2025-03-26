@@ -1,3 +1,7 @@
 .invalid-feedback {
 	display: block !important;
 }
+
+.filter-status {
+	margin-left: -55px;
+}

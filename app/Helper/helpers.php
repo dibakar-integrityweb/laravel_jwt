@@ -2,6 +2,7 @@
 
 use App\Models\Setting;
 use App\Models\User;
+use Illuminate\Support\Facades\Config;
 
 if (!function_exists('user_details')) {
     function user_details($user_id)
@@ -46,5 +47,19 @@ if (!function_exists('theme_style')) {
             $data['data_style_class'] = 'light-style';
         }
        return $data;
+    }
+}
+
+if (!function_exists('app_name')) {
+    function app_name($key)
+    {
+        $data = Setting::where('key', $key)->first();
+        if ($data) {
+            $app_name = $data['value'];
+        }else{
+           $app_name = Config::get('app.name');
+        }
+        
+       return $app_name;
     }
 }
